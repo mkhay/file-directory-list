@@ -38,10 +38,10 @@ List files and directories through a REST API and a CLI.
   
 * Run with CLI 
   ```shell
-  java -jar target/qoh-file-directory-list-0.0.1-SNAPSHOT.jar {folder_name}
+  java -Dspring.main.web-application-type=none -jar target/qoh-file-directory-list-0.0.1-SNAPSHOT.jar {folder_name}
   ```
   **Example**
   ```
-  java -jar target/qoh-file-directory-list-0.0.1-SNAPSHOT.jar src
+  java -Dspring.main.web-application-type=none -jar target/qoh-file-directory-list-0.0.1-SNAPSHOT.jar src
   ```
 > Note: for now, the application only looks for directories under the current working directory.

@@ -17,6 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Traverse recursively all files and folders under a given directory name and return them as a {@link FileSystemItem}
+ * structure
+ */
 @Slf4j
 @Service
 public class FileSystemVisitorService {
@@ -28,6 +32,12 @@ public class FileSystemVisitorService {
         return getFileSystemItem(file);
     }
 
+    /**
+     * Get all files and directories recursively under a given file.
+     *
+     * @param file the file to start the traversal from it.
+     * @return a file system item.
+     */
     private FileSystemItem getFileSystemItem(File file) {
 
         if (file.isDirectory()) {
@@ -46,6 +56,12 @@ public class FileSystemVisitorService {
         }
     }
 
+    /**
+     * Get all sub files and sub directories.
+     *
+     * @param directory the directory.
+     * @return a list of file system items.
+     */
     private List<FileSystemItem> getFileSystemItems(File directory) {
         List<FileSystemItem> items = new ArrayList<>();
         for (File item : Objects.requireNonNull(directory.listFiles())) {
@@ -54,6 +70,16 @@ public class FileSystemVisitorService {
         return items;
     }
 
+    /**
+     * Create a file system item to represent a file or a directory.
+     * The file's or directory's last modified time will be set to null if not able to read file attribute(s) and
+     * processing continue normally.
+     *
+     * @param file the file or directory.
+     * @param type the type.
+     * @param size the size in bytes.
+     * @return a file system item.
+     */
     private FileSystemItem createFileSystemItem(File file, ItemType type, long size) {
         LocalDateTime lastModifiedTime = null;
         try {

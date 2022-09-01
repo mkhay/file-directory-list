@@ -12,6 +12,9 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
+/**
+ * Convert a {@link FileSystemItem} object into a JSON string when running in CLI mode.
+ */
 @Slf4j
 @Component
 public class ListDirectoryCommand {
@@ -32,6 +35,12 @@ public class ListDirectoryCommand {
         this.fileSystemVisitorService = fileSystemVisitorService;
     }
 
+    /**
+     * Get a file system item structure for a given directory and convert it to a JSON string.
+     *
+     * @param folderName the directory name.
+     * @return a JSON string.
+     */
     public String execute(String folderName) {
         log.info("folder name: {}", folderName);
 
