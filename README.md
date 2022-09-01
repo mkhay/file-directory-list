@@ -4,7 +4,7 @@ List files and directories through a REST API and a CLI.
 # Pre-requisite
 * Java 8 OpenJDK
 * Maven 3.6 `https://archive.apache.org/dist/maven/maven-3/3.6.3/binaries/`
-* Make `JAVA_HOME` is set properly
+* Make sure `JAVA_HOME` is set properly
 
 # Run locally
 **1. Clone the repository** 
