@@ -1,7 +1,9 @@
 package ca.qoh.qohfiledirectorylist;
 
-import ca.qoh.qohfiledirectorylist.service.FileSystemVisitorService;
+import ca.qoh.qohfiledirectorylist.command.ListDirectoryCommand;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -12,11 +14,11 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
 public class QohFileDirectoryListApplication implements CommandLineRunner {
 
-    private final FileSystemVisitorService fileSystemVisitorService;
+    private final ListDirectoryCommand listDirectoryCommand;
 
     @Autowired
-    public QohFileDirectoryListApplication(FileSystemVisitorService fileSystemVisitorService) {
-        this.fileSystemVisitorService = fileSystemVisitorService;
+    public QohFileDirectoryListApplication(ListDirectoryCommand listDirectoryCommand) {
+        this.listDirectoryCommand = listDirectoryCommand;
     }
 
     public static void main(String[] args) {
@@ -25,16 +27,13 @@ public class QohFileDirectoryListApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        String folderName = args[0];
-
-        log.info("folder name: {}", folderName);
-
-        String output;
-        try {
-            output = fileSystemVisitorService.getItemsAsJson(folderName);
-        } catch (Exception exception) {
+        if (ArrayUtils.isEmpty(args)) {
             return;
         }
+
+        String folderName = args[0];
+
+        String output = listDirectoryCommand.execute(folderName);
 
         log.info(output);
     }

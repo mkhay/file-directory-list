@@ -2,14 +2,9 @@ package ca.qoh.qohfiledirectorylist.service;
 
 import ca.qoh.qohfiledirectorylist.model.FileSystemItem;
 import ca.qoh.qohfiledirectorylist.model.ItemType;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -28,21 +23,9 @@ public class FileSystemVisitorService {
 
     private static final String FILE_NOT_FOUND_MISSING_PERMISSION = "file not found or missing permission ";
 
-    private static final ObjectMapper mapper = new ObjectMapper();
-
-    @PostConstruct
-    public void init() {
-        mapper.findAndRegisterModules();
-    }
-
     public FileSystemItem getItems(String folderName) {
         File file = Paths.get(getPath(folderName)).toFile();
         return getFileSystemItem(file);
-    }
-
-    public String getItemsAsJson(String folderName) {
-        FileSystemItem items = getItems(folderName);
-        return convertToJson(items);
     }
 
     private FileSystemItem getFileSystemItem(File file) {
@@ -85,17 +68,6 @@ public class FileSystemVisitorService {
 
         return new FileSystemItem(file.getName(), file.getAbsolutePath(), size,
                 lastModifiedTime, type, 0L, new ArrayList<>());
-    }
-
-    private String convertToJson(FileSystemItem fileSystemItem) {
-        ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
-        String output = StringUtils.EMPTY;
-        try {
-            output = ow.writeValueAsString(fileSystemItem);
-        } catch (JsonProcessingException e) {
-            log.error("could not convert to JSON {}{}", FILE_NOT_FOUND_MISSING_PERMISSION, e.getMessage(), e);
-        }
-        return output;
     }
 
     private String getPath(String folderName) {
