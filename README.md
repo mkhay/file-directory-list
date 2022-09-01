@@ -49,9 +49,10 @@ List files and directories through a REST API and a CLI.
 # Pending items for Production
 * Currently, no active profile is set (using default), add prod profile.
 * Enable security and provide authentication and authorization on the REST API(s) e.g. basic auth, JWT token, LDAP integration etc.
-* Protect the REST API from DoS attack, and add implement rate limiting e.g. Bucket4j.
+* Protect the REST API from DoS attack, and implement rate limiting e.g. Bucket4j.
 * Set up a domain name, and enable HTTPs.
 * Validate user input.
+* Add support for special file types e.g. socket file, device file etc.
 * Add trace logs to be enabled on demand during prod investigation.
 * Compress rotated logs on the server, and ship them to a different log server e.g. ELK.
 * Build a CI/CD pipeline to build, package and deploy the service to different environment, including production.

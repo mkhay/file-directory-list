@@ -96,6 +96,12 @@ public class FileSystemVisitorService {
                 lastModifiedTime, type, 0L, new ArrayList<>());
     }
 
+    /**
+     * For now, only lookup the file or directory name directly under the current working directory.
+     *
+     * @param folderName the directory or file name.
+     * @return the absolute path of the directory or file.
+     */
     private String getPath(String folderName) {
         String baseDirectory = System.getProperty("user.dir");
         return Paths.get(baseDirectory, folderName.trim()).toFile().getAbsolutePath();
